@@ -1,0 +1,11 @@
+CREATE USER toolport_admin WITH PASSWORD 'toolport@db11';
+
+CREATE DATABASE toolport_db;
+GRANT ALL PRIVILEGES ON DATABASE toolport_db TO toolport_admin;
+
+\c toolport_db
+
+
+
+
+

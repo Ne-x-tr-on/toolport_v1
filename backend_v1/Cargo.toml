@@ -1,0 +1,65 @@
+[package]
+name        = "toolport-backend"
+version     = "0.1.0"
+edition     = "2021"
+default-run = "toolport-backend"
+
+[[bin]]
+name = "toolport-backend"
+path = "src/main.rs"
+
+[[bin]]
+name = "seed_admin"
+path = "src/bin/seed_admin.rs"
+
+[dependencies]
+# ── Web framework ──────────────────────────────────────────────────────────────
+axum            = { version = "0.7", features = ["macros"] }
+tower           = "0.4"
+tower-http      = { version = "0.5", features = ["cors", "trace"] }
+
+# ── Async runtime ───────────────────────────────────────────────────────────────
+tokio           = { version = "1", features = ["full"] }
+
+# ── Database ────────────────────────────────────────────────────────────────────
+sqlx            = { version = "0.7", features = [
+                    "runtime-tokio-rustls",
+                    "postgres",
+                    "uuid",
+                    "chrono",
+                    "json",
+                  ] }
+
+# ── Serialisation ───────────────────────────────────────────────────────────────
+serde           = { version = "1", features = ["derive"] }
+serde_json      = "1"
+
+# ── Auth ─────────────────────────────────────────────────────────────────────────
+jsonwebtoken    = "9"
+argon2          = "0.5"
+rand_core       = { version = "0.6", features = ["getrandom"] }
+
+# ── IDs ──────────────────────────────────────────────────────────────────────────
+uuid            = { version = "1", features = ["v4", "serde"] }
+
+# ── Date / Time ──────────────────────────────────────────────────────────────────
+chrono          = { version = "0.4", features = ["serde"] }
+
+# ── Config / env ─────────────────────────────────────────────────────────────────
+dotenvy         = "0.15"
+
+# ── Error handling ────────────────────────────────────────────────────────────────
+thiserror       = "1"
+anyhow          = "1"
+
+# ── Logging ───────────────────────────────────────────────────────────────────────
+tracing               = "0.1"
+tracing-subscriber    = { version = "0.3", features = ["env-filter"] }
+
+# ── Validation ────────────────────────────────────────────────────────────────────
+validator       = { version = "0.16", features = ["derive"] }
+
+[profile.release]
+opt-level = 3
+lto       = true
+codegen-units = 1

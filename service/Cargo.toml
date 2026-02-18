@@ -1,0 +1,16 @@
+[package]
+name = "service"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+# For the GitHub API and downloading the .exe
+reqwest = { version = "0.12", features = ["blocking", "json"] }
+# For parsing GitHub's JSON response
+serde = { version = "1.0", features = ["derive"] }
+# For comparing "v1.0.0" vs "v1.1.0"
+semver = "1.0"
+# THE MOST IMPORTANT: Handles replacing a running .exe on Windows
+self_replace = "1.5"
+# For security: ensures the downloaded file isn't corrupted
+sha2 = "0.10"

@@ -1,0 +1,44 @@
+@echo off
+echo =============================
+echo   TOOLPORT AUTO UPDATER
+echo =============================
+
+cd /d D:\mechatronics\projects\toolport_v1
+
+echo.
+echo Pulling latest code...
+git pull origin main
+
+echo.
+echo Building backend...
+cd backend_v1
+cargo build --release
+
+IF %ERRORLEVEL% NEQ 0 (
+    echo Backend build failed!
+    pause
+    exit /b
+)
+
+echo.
+echo Building frontend...
+cd ..\frontend_v1
+call npm install
+call npm run build
+
+IF %ERRORLEVEL% NEQ 0 (
+    echo Frontend build failed!
+    pause
+    exit /b
+)
+
+echo.
+echo Restarting ToolPort services...
+cd ..\service
+call restart.bat
+
+echo.
+echo =============================
+echo   UPDATE COMPLETE
+echo =============================
+pause

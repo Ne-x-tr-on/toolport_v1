@@ -34,7 +34,7 @@ cp .env.example .env
 ### 2. Create the Database
 
 ```bash
-createdb toolport_db
+createdb toolport_db or use the setup file under services folder
 ```
 
 ### 3. Run Migrations

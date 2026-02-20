@@ -1,0 +1,37 @@
+rm -rf node_modules
+rm package-lock.json
+rm bun.lockb
+
+
+
+start.bat
+
+@echo off
+:: ============================
+:: Toolport Start Script
+:: ============================
+
+:: Get script folder
+SET ROOT_DIR=%~dp0\..
+
+echo ============================
+echo Starting Toolport Backend...
+echo ============================
+
+:: Start backend in a new window and redirect logs
+start "Toolport Backend" "%ROOT_DIR%\backend\toolport.exe" > "%ROOT_DIR%\logs\backend.log" 2>&1
+
+:: Wait 3 seconds to ensure backend starts
+timeout /t 3 /nobreak >nul
+
+echo Backend started successfully.
+echo Frontend is served by backend at http://localhost:3000
+
+:: Optional: Keep this window open for logs
+echo Press Ctrl+C to exit this window
+pause
+
+:restart
+start "Toolport Backend" "%ROOT_DIR%\backend\toolport.exe" > "%ROOT_DIR%\logs\backend.log" 2>&1
+timeout /t 5
+goto restart

@@ -1,4 +1,3 @@
-use std::env;
 use std::io::{self, Write};
 use std::process::{Command, Stdio};
 use dotenvy::dotenv;
@@ -21,51 +20,44 @@ fn run(cmd: &str, args: &[&str], dir: &str) -> bool {
 
 fn main() {
     dotenv().ok();
+
     println!("=============================");
     println!("   TOOLPORT RUST UPDATER");
     println!("=============================");
 
     let root = r"D:\Mechatronics\Projects\toolport_V1";
 
-    // let root = env::var(DIR);
-
-    // 1. Git pull
-    println!("\nUpdating source...");
+    // 1. Pull latest code
+    println!("\nPulling latest code...");
     if !run("git", &["pull", "origin", "main"], root) {
         println!("Git update failed");
         return;
     }
 
     // 2. Build backend
-    // println!("\nBuilding backend...");
-    // let backend = format!(r"{}\backend_v1", root);
-    // if !run("cargo", &["build", "--release"], &backend) {
-    //     println!("Backend build failed");
-    //     return;
-    // }
+    println!("\nBuilding backend...");
+    let backend = format!(r"{}\backend_v1", root);
 
-    //  println!("\nBuilding backend...");
-    // let backend = format!(r"{}\backend_v1", root);
-    // if !run("cargo", &["run", "--release"], &backend) {
-    //     println!("Backend build failed");
-    //     return;
-    // }
+    if !run("cargo", &["build", "--release"], &backend) {
+        println!("Backend build failed");
+        return;
+    }
 
     // 3. Build frontend
     println!("\nBuilding frontend...");
-    let frontend = format!(r"{}\frontend_v1", root);
+    let frontend = format!(r"{}\frontend_v2", root);
 
-    // if !run("npm", &["i"], &frontend) {
+    // if !run("npm", &["install"], &frontend) {
     //     println!("npm install failed");
     //     return;
     // }
 
-    if !run("npm", &["start", "build"], &frontend) {
-        println!("Frontend build failed");
-        return;
-    }
+    // if !run("npm", &["run", "build"], &frontend) {
+    //     println!("Frontend build failed");
+    //     return;
+    // }
 
-    // 4. Restart service
+    // 4. Restart services
     println!("\nRestarting services...");
     let service = format!(r"{}\service", root);
     run("cmd", &["/C", "restart.bat"], &service);

@@ -5,6 +5,7 @@ use axum::{
     Router,
 };
 
+#[allow(unused)]
 use axum::routing::get_service;
 
 use sqlx::postgres::PgPoolOptions;
@@ -47,6 +48,9 @@ async fn main() -> anyhow::Result<()> {
     let config = config::AppConfig::from_env()?;
     tracing::info!("Starting ToolPort backend on port {}", config.port);
 
+
+    // tracing::info!("Trying to connect to postgres");
+tracing::info!("Newton's Legacy Here! Leave it to Him");
     // ── Database pool ─────────────────────────────────────────────────────────
     let db = PgPoolOptions::new()
         .max_connections(20)
